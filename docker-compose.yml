@@ -17,7 +17,7 @@ services:
     image: "docker.io/postgres:15-alpine"
 
     ports:
-      - "5432:5432"
+    - "5432:5432"
 
     environment:
       POSTGRES_DB: solarius
@@ -38,19 +38,19 @@ services:
       dockerfile: Dockerfile
 
     env_file:
-      - .env
+    - .env
 
     environment:
       DATABASE_URL: postgresql://solarius:solarius@postgres:5432/solarius
 
     volumes:
-      - ./api:/api
+    - ./api:/api
 
     depends_on:
-      - postgres
+    - postgres
 
     ports:
-      - "8001:8000"
+    - "8001:8000"
 
   prometheus:
     <<: *logging
@@ -60,7 +60,7 @@ services:
     image: "docker.io/prom/prometheus"
 
     volumes:
-      - ./services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    - ./services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
     ports:
-      - "9090:9090"
+    - "9090:9090"

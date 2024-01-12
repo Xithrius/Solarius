@@ -48,12 +48,6 @@ jobs:
       working-directory: ${{ matrix.directory }}
       run: pdm test-cov
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./${{ matrix.directory }}/coverage.xml
-
     - name: Prepare Pull Request Payload artifact
       working-directory: ${{ matrix.directory }}
       id: prepare-artifact
