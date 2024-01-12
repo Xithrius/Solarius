@@ -20,12 +20,12 @@ services:
       - "5432:5432"
 
     environment:
-      POSTGRES_DB: xythrion
-      POSTGRES_PASSWORD: xythrion
-      POSTGRES_USER: xythrion
+      POSTGRES_DB: solarius
+      POSTGRES_PASSWORD: solarius
+      POSTGRES_USER: solarius
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U xythrion"]
+      test: ["CMD-SHELL", "pg_isready -U solarius"]
       interval: 2s
       timeout: 1s
       retries: 5
@@ -41,7 +41,7 @@ services:
       - .env
 
     environment:
-      DATABASE_URL: postgresql://xythrion:xythrion@postgres:5432/xythrion
+      DATABASE_URL: postgresql://solarius:solarius@postgres:5432/solarius
 
     volumes:
       - ./api:/api
