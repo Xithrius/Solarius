@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     log_level: LogLevel = LogLevel.INFO
     # Variables for the database
     db_host: str = "localhost"
-    db_port: int = 5432
+    db_port: int = 5000
     db_user: str = "solarius"
     db_pass: str = "solarius"
     db_base: str = "solarius"

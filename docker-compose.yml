@@ -17,7 +17,7 @@ services:
     image: "docker.io/postgres:15-alpine"
 
     ports:
-    - "5432:5432"
+    - "5000:5000"
 
     environment:
       POSTGRES_DB: solarius
@@ -41,7 +41,7 @@ services:
     - .env
 
     environment:
-      DATABASE_URL: postgresql://solarius:solarius@postgres:5432/solarius
+      DATABASE_URL: postgresql://solarius:solarius@postgres:5000/solarius
 
     volumes:
     - ./api:/api
