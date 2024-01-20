@@ -3,10 +3,11 @@ from typing import Annotated
 
 import httpx
 from fastapi import APIRouter, Depends, status
+from fastapi.concurrency import run_in_threadpool
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.dependencies import get_db_session
-from fastapi.concurrency import run_in_threadpool
+
 from .schemas import DuckDuckGoInstantResults, GoogleSearchResult
 from .utils import summarize_search_snippets
 
@@ -48,14 +49,13 @@ async def duckduckgo_instant_answers(
 @router.get(
     "/google",
     status_code=status.HTTP_200_OK,
-    # response_model=list[GoogleSearchResult],
+    response_model=list[GoogleSearchResult],
     response_description="Search results from Google",
 )
 async def google_search(
     session: Annotated[AsyncSession, Depends(get_db_session)],
     query: str,
-# ) -> list[GoogleSearchResult]:
-):
+) -> list[GoogleSearchResult]:
     params = {
         "q": query,
         "cx": GOOGLE_API_CSE_ID,

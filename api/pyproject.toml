@@ -24,8 +24,7 @@ dependencies = [
     "prometheus-fastapi-instrumentator>=6.1.0",
     "testcontainers[postgres]>=3.7.1",
     "pytest>=7.4.4",
-    "transformers>=4.36.2",
-    # "tensorflow-cpu>=2.10"
+    # "transformers>=4.36.2",
 ]
 
 [tool]
