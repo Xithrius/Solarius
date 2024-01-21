@@ -3,7 +3,7 @@ name = "solarius-api"
 version = "0.1.0"
 description = "API portion of Solarius"
 authors = [{ name = "Xithrius", email = "xithrius@gmail.com" }]
-requires-python = ">=3.12"
+requires-python = ">=3.11,<3.12"
 license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.109.0",
@@ -24,7 +24,8 @@ dependencies = [
     "prometheus-fastapi-instrumentator>=6.1.0",
     "testcontainers[postgres]>=3.7.1",
     "pytest>=7.4.4",
-    # "transformers>=4.36.2",
+    "transformers>=4.36.2",
+    "tensorflow>=2.15.0",
 ]
 
 [tool]
