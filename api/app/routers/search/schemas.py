@@ -12,3 +12,7 @@ class GoogleSearchResult(BaseModel):
     link: str
     displayLink: str  # noqa: N815
     snippet: str
+
+
+class SummarizedResult(BaseModel):
+    output: str

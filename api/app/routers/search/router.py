@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.dependencies import get_db_session
 
-from .schemas import DuckDuckGoInstantResults, GoogleSearchResult
+from .schemas import DuckDuckGoInstantResults, GoogleSearchResult, SummarizedResult
 from .utils import summarize_search_snippets
 
 router = APIRouter()
@@ -49,13 +49,13 @@ async def duckduckgo_instant_answers(
 @router.get(
     "/google",
     status_code=status.HTTP_200_OK,
-    response_model=list[GoogleSearchResult],
+    response_model=SummarizedResult,
     response_description="Search results from Google",
 )
 async def google_search(
     session: Annotated[AsyncSession, Depends(get_db_session)],
     query: str,
-) -> list[GoogleSearchResult]:
+) -> SummarizedResult:
     params = {
         "q": query,
         "cx": GOOGLE_API_CSE_ID,
@@ -72,4 +72,4 @@ async def google_search(
 
     summarized_result = await run_in_threadpool(summarize_search_snippets, combined_result)
 
-    return summarized_result
+    return {"output": summarized_result}
