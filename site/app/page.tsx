@@ -6,11 +6,13 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, CircularProgress } from "@nextui-org/react";
 import { nextapi } from "@/config/api";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const [searchOutput, setSearchOutput] = useState("");
+  const [searchOutput, setSearchOutput] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { control, handleSubmit } = useForm({
     defaultValues: { search: "" },
@@ -23,12 +25,39 @@ export default function Home() {
       return;
     }
 
+    setIsLoading(true);
+
     const res = await nextapi.get(`/api/search?query=${search}`);
+
+    setIsLoading(false);
 
     if (res.status == 200) {
       const data = res.data;
       setSearchOutput(data.data.output);
     }
+  };
+
+  const SearchedOutput = () => {
+    const cardVariants = {
+      hidden: { opacity: 0, y: 25 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+    };
+
+    if (searchOutput) {
+      return (
+        <motion.div variants={cardVariants} initial="hidden" animate="visible">
+          <Card>
+            <CardBody>
+              <p>Summary: {searchOutput}</p>
+            </CardBody>
+          </Card>
+        </motion.div>
+      );
+    } else if (isLoading) {
+      return <CircularProgress aria-label="Loading..." />;
+    }
+
+    return null;
   };
 
   return (
@@ -100,11 +129,9 @@ export default function Home() {
             Search
           </Button>
         </form>
-        <Card>
-          <CardBody>
-            <p>Summary: {searchOutput}</p>
-          </CardBody>
-        </Card>
+      </div>
+      <div>
+        <SearchedOutput />
       </div>
     </section>
   );
