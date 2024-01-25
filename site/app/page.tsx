@@ -62,23 +62,12 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-lg text-center justify-center">
-        <h1 className={title()}>Make&nbsp;</h1>
-        <h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
-        <br />
-        <h1 className={title()}>
-          websites regardless of your design experience.
-        </h1>
-        <h2 className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library.
-        </h2>
-      </div>
-
+      <div className={title()}>Solarius</div>
       <div className="mt-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
           method="GET"
-          className="flex flex-col"
+          className="flex flex-col items-center"
         >
           <Controller
             name="search"
@@ -87,7 +76,6 @@ export default function Home() {
               <Input
                 label="Search"
                 isClearable
-                // TODO: Fix clearing, this does not work.
                 onClear={() => {
                   field.value = "";
                 }}
@@ -101,16 +89,10 @@ export default function Home() {
                   ],
                   innerWrapper: "bg-transparent",
                   inputWrapper: [
-                    "shadow-xl",
-                    "bg-default-200/50",
-                    "dark:bg-default/60",
-                    "backdrop-blur-xl",
-                    "backdrop-saturate-200",
-                    "hover:bg-default-200/70",
-                    "dark:hover:bg-default/70",
-                    "group-data-[focused=true]:bg-default-200/50",
-                    "dark:group-data-[focused=true]:bg-default/60",
-                    "!cursor-text",
+                    "shadow-lg",
+                    "w-full", // Use 100% width on small screens
+                    "md:w-[640px]", // Use 640px width on medium screens and up
+                    "mx-auto", // Center the input field
                   ],
                 }}
                 placeholder="Type to search..."
@@ -124,7 +106,7 @@ export default function Home() {
           <Button
             type="submit"
             radius="full"
-            className="mt-4 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg justify-center items-center mx-16"
+            className="mt-6 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg justify-center items-center w-60"
           >
             Search
           </Button>
