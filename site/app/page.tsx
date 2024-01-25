@@ -6,9 +6,24 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import { Card, CardBody, CircularProgress } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CircularProgress,
+  Divider,
+  Skeleton,
+} from "@nextui-org/react";
 import { nextapi } from "@/config/api";
 import { motion } from "framer-motion";
+import styled from "styled-components";
+
+const StyledCard = styled(Card)`
+  border-radius: 12px;
+  background:
+    linear-gradient(#303133, #303133) padding-box,
+    linear-gradient(90deg, #ed6e61, #6359e1) border-box;
+  border: 3px solid transparent;
+`;
 
 export default function Home() {
   const [searchOutput, setSearchOutput] = useState(undefined);
@@ -43,21 +58,56 @@ export default function Home() {
       visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
     };
 
-    if (searchOutput) {
-      return (
-        <motion.div variants={cardVariants} initial="hidden" animate="visible">
-          <Card>
+    const CardOutput = () => {
+      if (searchOutput) {
+        return (
+          <StyledCard
+            className="w-full md:w-[640px] mx-auto space-y-5 p-4"
+            radius="lg"
+          >
             <CardBody>
-              <p>Summary: {searchOutput}</p>
+              <p>{searchOutput}</p>
             </CardBody>
+          </StyledCard>
+        );
+      } else if (isLoading) {
+        return (
+          <Card
+            className="w-full md:w-[640px] mx-auto space-y-5 p-4"
+            radius="lg"
+          >
+            <Skeleton className="rounded-lg">
+              <div className="h-24 rounded-lg bg-default-300"></div>
+            </Skeleton>
+            <div className="space-y-3">
+              <Skeleton className="w-3/5 rounded-lg">
+                <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+              </Skeleton>
+              <Skeleton className="w-4/5 rounded-lg">
+                <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+              </Skeleton>
+              <Skeleton className="w-2/5 rounded-lg">
+                <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+              </Skeleton>
+            </div>
           </Card>
-        </motion.div>
-      );
-    } else if (isLoading) {
-      return <CircularProgress aria-label="Loading..." />;
-    }
+        );
+      }
 
-    return null;
+      return null;
+    };
+
+    return (
+      <motion.div variants={cardVariants} initial="hidden" animate="visible">
+        {searchOutput || isLoading ? (
+          <>
+            <div className={subtitle()}>Summary</div>
+            <Divider className="my-4 w-full md:w-[640px] mx-auto" />
+          </>
+        ) : undefined}
+        <CardOutput />
+      </motion.div>
+    );
   };
 
   return (
@@ -90,9 +140,9 @@ export default function Home() {
                   innerWrapper: "bg-transparent",
                   inputWrapper: [
                     "shadow-lg",
-                    "w-full", // Use 100% width on small screens
-                    "md:w-[640px]", // Use 640px width on medium screens and up
-                    "mx-auto", // Center the input field
+                    "w-full",
+                    "md:w-[640px]",
+                    "mx-auto",
                   ],
                 }}
                 placeholder="Type to search..."

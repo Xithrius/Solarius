@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.2.9",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
@@ -21,7 +22,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
-    "@hookform/resolvers": "^3.3.4"
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",
