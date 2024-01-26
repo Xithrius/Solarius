@@ -6,34 +6,34 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import {
-  Card,
-  CardBody,
-  CircularProgress,
-  Divider,
-  Skeleton,
-} from "@nextui-org/react";
+import { Card, CardBody, Divider, Skeleton } from "@nextui-org/react";
 import { nextapi } from "@/config/api";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-
-const StyledCard = styled(Card)`
-  border-radius: 12px;
-  background:
-    linear-gradient(#303133, #303133) padding-box,
-    linear-gradient(90deg, #ed6e61, #6359e1) border-box;
-  border: 3px solid transparent;
-`;
+import { useTheme } from "next-themes";
 
 export default function Home() {
   const [searchOutput, setSearchOutput] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+
+  const theme = useTheme();
+
+  const StyledCard = styled(Card)`
+    border-radius: 12px;
+    background: ${() =>
+      theme.theme === "dark"
+        ? "linear-gradient(#303133, #303133) padding-box, linear-gradient(90deg, #ed6e61, #6359e1) border-box"
+        : "linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #ed6e61, #6359e1) border-box"};
+    border: 3px solid transparent;
+  `;
 
   const { control, handleSubmit } = useForm({
     defaultValues: { search: "" },
   });
 
   const onSubmit = async (data: any) => {
+    setSearchOutput(undefined);
+
     const { search } = data;
 
     if (!search) {
