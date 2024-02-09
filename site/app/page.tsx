@@ -12,22 +12,31 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { useTheme } from "next-themes";
 
+const LightStyledCard = styled(Card)`
+  border-radius: 12px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ed6e61, #6359e1) border-box;
+  border: 3px solid transparent;
+`;
+
+const DarkStyledCard = styled(Card)`
+  border-radius: 12px;
+  background:
+    linear-gradient(#303133, #303133) padding-box,
+    linear-gradient(90deg, #ed6e61, #6359e1) border-box;
+  border: 3px solid transparent;
+`;
+
 export default function Home() {
   const [searchOutput, setSearchOutput] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   const theme = useTheme();
 
-  const StyledCard = styled(Card)`
-    border-radius: 12px;
-    background: ${() =>
-      theme.theme === "dark"
-        ? "linear-gradient(#303133, #303133) padding-box, linear-gradient(90deg, #ed6e61, #6359e1) border-box"
-        : "linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #ed6e61, #6359e1) border-box"};
-    border: 3px solid transparent;
-  `;
+  const StyledCard = theme.theme === "light" ? LightStyledCard : DarkStyledCard;
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     defaultValues: { search: "" },
   });
 
@@ -127,7 +136,8 @@ export default function Home() {
                 label="Search"
                 isClearable
                 onClear={() => {
-                  field.value = "";
+                  control._reset();
+                  setSearchOutput(undefined);
                 }}
                 radius="lg"
                 classNames={{

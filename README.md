@@ -2,7 +2,7 @@
 
 # Solarius
 
-Getting the most out of your search results
+Summarizing results of your favorite search engines
 
 <img src="images/preview.png" />
 

@@ -2,6 +2,7 @@
 - [x] Get summarizing working with [transformers](https://github.com/huggingface/transformers) ([some help from phind](https://www.phind.com/search?cache=rgatat7hmb4701vrm41hd3zf))
 - [x] Finish a basic search UI in the site, get it to call FastAPI portion
 - [x] Style the site so it is readable
+- [ ] Show sources
 - [ ] Extract topics from summarizations, visualize them as [chips](https://nextui.org/docs/components/chip)
 - [ ] Settings button
     - [ ] Drop down for switching search engines
