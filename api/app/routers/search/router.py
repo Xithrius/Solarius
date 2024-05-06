@@ -72,4 +72,4 @@ async def google_search(
 
     summarized_result = await run_in_threadpool(summarize_search_snippets, combined_result)
 
-    return {"output": summarized_result}
+    return SummarizedResult(output=summarized_result)
