@@ -11,14 +11,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-test:
-    name: Lint & test
+  api-ci:
+    name: API CI
 
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+
       matrix:
-        directory: ['api']
+        directory: ["api"]
 
     steps:
     - name: Checkout repository
@@ -48,18 +50,29 @@ jobs:
       working-directory: ${{ matrix.directory }}
       run: pdm test-cov
 
-    - name: Prepare Pull Request Payload artifact
-      working-directory: ${{ matrix.directory }}
-      id: prepare-artifact
-      if: always() && github.event_name == 'pull_request'
-      continue-on-error: true
-      run: cat $GITHUB_EVENT_PATH | jq '.pull_request' > pull_request_payload.json
+  site-ci:
+    name: Site CI
 
-    - name: Upload a Build Artifact
-      if: always() && steps.prepare-artifact.outcome == 'success'
-      continue-on-error: true
-      uses: actions/upload-artifact@v4
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        directory: ["site"]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - uses: oven-sh/setup-bun@v1
       with:
-        working-directory: ${{ matrix.directory }}
-        name: pull-request-payload
-        path: pull_request_payload.json
+        bun-version: "latest"
+
+    - name: Install dependencies
+      working-directory: ${{ matrix.directory }}
+      run: bun install
+
+    - name: Run linting
+      working-directory: ${{ matrix.directory }}
+      run: bun ci

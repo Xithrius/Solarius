@@ -1,10 +1,9 @@
 {
-  "recommendations": [
-    "ms-python.python",
-    "charliermarsh.ruff",
-    "bradlc.vscode-tailwindcss",
-    "esbenp.prettier-vscode",
-    "christian-kohler.npm-intellisense",
-    "dbaeumer.vscode-eslint"
-  ]
+	"recommendations": [
+		"ms-python.python",
+		"charliermarsh.ruff",
+		"bradlc.vscode-tailwindcss",
+		"christian-kohler.npm-intellisense",
+		"dbaeumer.vscode-eslint"
+	]
 }

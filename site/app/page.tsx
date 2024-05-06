@@ -1,16 +1,16 @@
 "use client";
 
-import { title, subtitle } from "@/components/primitives";
 import { SearchIcon } from "@/components/icons";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
-import { Card, CardBody, Divider, Skeleton } from "@nextui-org/react";
+import { subtitle, title } from "@/components/primitives";
 import { nextapi } from "@/config/api";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Card, CardBody, Divider, Skeleton } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import styled from "styled-components";
 import { useTheme } from "next-themes";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import styled from "styled-components";
 
 const LightStyledCard = styled(Card)`
   border-radius: 12px;
@@ -40,7 +40,7 @@ export default function Home() {
     defaultValues: { search: "" },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { search: string }) => {
     setSearchOutput(undefined);
 
     const { search } = data;
@@ -55,7 +55,7 @@ export default function Home() {
 
     setIsLoading(false);
 
-    if (res.status == 200) {
+    if (res.status === 200) {
       const data = res.data;
       setSearchOutput(data.data.output);
     }
@@ -79,24 +79,25 @@ export default function Home() {
             </CardBody>
           </StyledCard>
         );
-      } else if (isLoading) {
+      }
+      if (isLoading) {
         return (
           <Card
             className="w-full md:w-[640px] mx-auto space-y-5 p-4"
             radius="lg"
           >
             <Skeleton className="rounded-lg">
-              <div className="h-24 rounded-lg bg-default-300"></div>
+              <div className="h-24 rounded-lg bg-default-300" />
             </Skeleton>
             <div className="space-y-3">
               <Skeleton className="w-3/5 rounded-lg">
-                <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                <div className="h-3 w-3/5 rounded-lg bg-default-200" />
               </Skeleton>
               <Skeleton className="w-4/5 rounded-lg">
-                <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                <div className="h-3 w-4/5 rounded-lg bg-default-200" />
               </Skeleton>
               <Skeleton className="w-2/5 rounded-lg">
-                <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                <div className="h-3 w-2/5 rounded-lg bg-default-300" />
               </Skeleton>
             </div>
           </Card>
