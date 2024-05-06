@@ -1,4 +1,3 @@
-from os import getenv
 from typing import Annotated
 
 import httpx
@@ -7,6 +6,7 @@ from fastapi.concurrency import run_in_threadpool
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.dependencies import get_db_session
+from app.settings import settings
 
 from .schemas import DuckDuckGoInstantResults, GoogleSearchResult, SummarizedResult
 from .utils import summarize_search_snippets
@@ -15,9 +15,6 @@ router = APIRouter()
 
 DUCKDUCKGO_API_BASE_URL = "https://api.duckduckgo.com/"
 GOOGLE_API_CUSTOM_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
-
-GOOGLE_API_KEY = getenv("GOOGLE_API_KEY")
-GOOGLE_API_CSE_ID = getenv("GOOGLE_API_CSE_ID")
 
 
 @router.get(
@@ -58,8 +55,8 @@ async def google_search(
 ) -> SummarizedResult:
     params = {
         "q": query,
-        "cx": GOOGLE_API_CSE_ID,
-        "key": GOOGLE_API_KEY,
+        "cx": settings.google_cse_id,
+        "key": settings.google_key,
     }
 
     response = httpx.get(GOOGLE_API_CUSTOM_SEARCH_URL, params=params)
