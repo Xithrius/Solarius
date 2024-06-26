@@ -1,0 +1,8 @@
+- [ ] Rewrite with [shadcn](https://ui.shadcn.com/)
+- [ ] User authentication with [fastapi-users](https://github.com/fastapi-users/fastapi-users) and [iron-session](https://github.com/vvo/iron-session)
+  - [ ] API routes
+  - [ ] Migrations
+  - [ ] Login page
+  - [ ] Settings page
+- [ ] CORS middleware
+- [ ] Change between LLM transformers (t5-base, t5-small, etc)
